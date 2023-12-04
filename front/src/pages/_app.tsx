@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
-// import React from 'react';
+import React from 'react';
 // import { useSession, signIn, signOut } from 'next-auth/react';
 // import { NextPage } from 'next';
 
