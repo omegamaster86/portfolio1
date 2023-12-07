@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { NextPage } from 'next';
+import Link from 'next/link';
 
 const Login: NextPage = () => {
   const { data: session } = useSession();
@@ -18,7 +19,9 @@ const Login: NextPage = () => {
               !session && (
                   <div>
                       <p>ログインしていません</p>
-                      <button onClick={() => signIn()}>ログイン</button>
+                      <Link href="/test">
+                        <button onClick={() => signIn()}>ログイン</button>
+                      </Link>
                   </div>
               )
           }
