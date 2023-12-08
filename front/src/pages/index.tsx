@@ -19,9 +19,9 @@ const Login: NextPage = () => {
               !session && (
                   <div>
                       <p>ログインしていません</p>
-                      <Link href="/test">
+                      {/* <Link href="/test"> */}
                         <button onClick={() => signIn()}>ログイン</button>
-                      </Link>
+                      {/* </Link> */}
                   </div>
               )
           }
