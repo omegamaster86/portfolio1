@@ -36,7 +36,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./front:/front
-    command: 'yarn dev'
+      - /front/node_modules
+    command: sh -c 'npm install && npm run'
     image: portfolio_front_image
     container_name: portfolio_front
     ports:
