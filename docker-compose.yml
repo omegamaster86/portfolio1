@@ -32,10 +32,10 @@ services:
     container_name: portfolio_api
   front: 
     build:
-      context: ./front/
+      context: ./web-front/
       dockerfile: Dockerfile
     volumes:
-      - ./front:/front
+      - ./web-front:/front
       - /front/node_modules
     command: sh -c 'npm install && npm run'
     image: portfolio_front_image
