@@ -8,8 +8,8 @@ const Login: NextPage = () => {
         <>
             {
                 session && (
-                    <div>
-                       <h1>ようこそ, {session.user && session.user.name}さん</h1>
+                    <div >
+                       <h1 className='text-rose-600'>ようこそ, {session.user && session.user.name}さん</h1>
                         <button onClick={() => signOut()}>ログアウト</button>
                     </div>
                 )
