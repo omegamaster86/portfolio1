@@ -32,12 +32,12 @@ services:
     container_name: portfolio_api
   front: 
     build:
-      context: ./web-front/
+      context: ./front
       dockerfile: Dockerfile
     volumes:
-      - ./web-front:/front
+      - ./front:/front
       - /front/node_modules
-    command: sh -c 'npm install && npm run'
+    command: 'yarn dev'
     image: portfolio_front_image
     container_name: portfolio_front
     ports:
