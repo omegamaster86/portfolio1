@@ -36,7 +36,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./front:/front
-      - /front/node_modules
+      # - /front/node_modules
     command: 'yarn dev'
     image: portfolio_front_image
     container_name: portfolio_front
@@ -44,7 +44,7 @@ services:
       - "8000:3000"
 volumes:
   mysql-db:
-    # driver: local
+    driver: local
 
 # MySQLサーバを起動するときに使用されるコマンドを指定しています。
 # - --character-set-server=utf8mb4 は、MySQLサーバが使用するデフォルトのキャラクターセットをutf8mb4に設定します。
