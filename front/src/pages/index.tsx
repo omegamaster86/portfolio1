@@ -9,7 +9,7 @@ const Login: NextPage = () => {
             {
                 session && (
                     <div >
-                       <h1 className='text-rose-600'>ようこそ, {session.user && session.user.name}さん</h1>
+                       <h1>ようこそ, {session.user && session.user.name}さん</h1>
                         <button onClick={() => signOut()}>ログアウト</button>
                     </div>
                 )
@@ -17,7 +17,7 @@ const Login: NextPage = () => {
             {
                 !session && (
                     <div>
-                        <p>ログインしていません</p>
+                        <p className='text-rose-600'>ログインしていません</p>
                         <button onClick={() => signIn()}>ログイン</button>
                     </div>
                 )
