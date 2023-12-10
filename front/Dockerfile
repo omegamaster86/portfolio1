@@ -4,6 +4,9 @@ WORKDIR /front
 FROM base AS dependencies  
 RUN yarn install --production && yarn cache clean
 
+COPY package.json yarn.lock ./
+RUN yarn install
+
 # FROM dependencies AS build  
 # WORKDIR /front
 # COPY . /front
