@@ -13,6 +13,9 @@ const Login: NextPage = () => {
   //     "expires":"2023-04-01T00:29:51.016Z"
   // }
   const { data: session } = useSession();
+  // async function handleGoogleSignin () {
+  //   signIn('google',{ callbackUrl : "http://localhost:8000"})
+  // }
 
   return (
     <div>
