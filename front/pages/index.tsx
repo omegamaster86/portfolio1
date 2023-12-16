@@ -3,19 +3,8 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { NextPage } from 'next';
 
 const Login: NextPage = () => {
-  // sessionには、以下のような値が入っています。
-  // {
-  //     "user":{
-  //        "name":"John",
-  //        "email":"john@examle.com",
-  //        "image":"https://lh3.googleusercontent.com/a/AGNmyxZF7jQN_YTYVyxIx5kfdo3kalfRktVD17GrZ9n=s96-c"
-  //     },
-  //     "expires":"2023-04-01T00:29:51.016Z"
-  // }
+
   const { data: session } = useSession();
-  // async function handleGoogleSignin () {
-  //   signIn('google',{ callbackUrl : "http://localhost:8000"})
-  // }
 
   return (
     <div>
