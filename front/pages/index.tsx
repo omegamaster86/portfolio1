@@ -1,34 +1,52 @@
-import React from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import React, { useState } from 'react';
 
-const Login: NextPage = () => {
+export default function Home(){
 
-  const { data: session } = useSession();
+  const [session, setSession] = useState(false)
 
   return (
     <div>
-      {
-        // セッションがある場合、ログアウトを表示
-        session && (
-          <div>
-            <h1>ようこそ, {session.user && session.user.name}さん</h1>
-            <button onClick={() => signOut()}>ログアウト</button>
-          </div>
-        )
-      }
-      {
-        // セッションがない場合、ログインを表示
-        // ログインボタンを押すと、ログインページに遷移する
-        !session && (
-          <div>
-            <p>ログインしていません</p>
-            <button onClick={() => signIn()}>ログイン</button>
-          </div>
-        )
-      }
-    </div>
-  );
-};
+      <Head>
+        <title>Home page</title>
+      </Head>
 
-export default Login;
+      {session ? User() : Guest()}
+    </div>
+  )
+}
+
+// Guest
+export const Guest = () => {
+  return (
+    <main className='container mx-auto text-center py-20'>
+      <div className='text-4xl font-bold'>Guest Homepages</div>
+      <div className='flex justify-center'>
+        <Link href={'/login'} className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50">Sign In</Link>
+      </div>
+    </main>
+  )
+}
+
+// Authorize User
+export const User = () => {
+  return (
+    <main className='container mx-auto text-center py-20'>
+      <div className='text-4xl font-bold'>User Homepages</div>
+
+      <div className="details">
+        <h5>Unknown</h5>
+        <h5>Unknown</h5>
+      </div>
+
+      <div className="flex justify-center">
+        <button className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Sign Out</button>
+      </div>
+
+      <div className='flex justify-center'>
+        <Link href={'/profile'} className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50">profile Page</Link>
+      </div>
+    </main>
+  )
+}
