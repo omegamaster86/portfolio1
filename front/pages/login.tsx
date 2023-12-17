@@ -49,7 +49,7 @@ export default function Login(){
                     </div>
                 </form>
                 <p className="text-gray-400 text-center">
-                    don't have an account yet?<Link className=" text-blue-700" href={'/register'}>Sign Up</Link>
+                    don't have an account yet?  <Link className=" text-blue-700" href={'/register'}>Sign Up</Link>
                 </p>
             </section>
         </Layout>
