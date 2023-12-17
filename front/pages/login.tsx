@@ -2,7 +2,7 @@ import Email from "next-auth/providers/email";
 import Head from "next/head";
 import Link from "next/link";
 import { Layout } from "./components/layout";
-import { EmailAdress } from "./components/email"
+import { EmailAdress, PasswordInput } from "./components/email"
 
 export default function Login(){
     return(
@@ -15,7 +15,9 @@ export default function Login(){
                     <h1 className="text-gray-800 text-4xl font-bold py-4">Explore</h1>
                     <p className=" w-3/4 mx-auto text-gray-400">HHKBHHKBHHKBHHKBHHKBHHKB</p>
                 </div>
-                <form className=" flex flex-col gap-5">
+                <EmailAdress/>
+                <PasswordInput/>
+                {/* <form className=" flex flex-col gap-5">
                     <div className="flex border rounded-xl relative">
                         <input 
                         className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none"
@@ -31,7 +33,8 @@ export default function Login(){
                         name="password"
                         placeholder="password"
                         />
-                    </div>
+                    </div> */}
+                <form className=" flex flex-col gap-5">
                     <div className="input-button">
                         <button type="submit">
                             Login
@@ -43,7 +46,6 @@ export default function Login(){
                         </button>
                     </div>
                 </form>
-                <EmailAdress/>
                 <p className="text-gray-400 text-center">
                     don't have an account yet?<Link className=" text-blue-700" href={'/register'}>Sign Up</Link>
                 </p>
