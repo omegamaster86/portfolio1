@@ -4,8 +4,14 @@ import Link from "next/link";
 import { Layout } from "./components/layout";
 import { EmailAdress, PasswordInput } from "./components/email"
 import Image from "next/image";
+import { signIn } from "next-auth/react"
 
 export default function Login(){
+
+    async function handleGoogleSignin() {
+        signIn('google', { callbackUrl : "http://localhost:8000"})
+    }
+
     return(
         <Layout>
             <Head>
@@ -43,7 +49,7 @@ export default function Login(){
                         </button>
                     </div>
                     <div className="input-button">
-                        <button type="button" className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                        <button type="button" onClick={handleGoogleSignin} className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
                             Sign In With Google<Image src={'/assets/google.svg'} width="20" height={20} alt="googleicon" className="pt-1"></Image>
                         </button>
                     </div>
