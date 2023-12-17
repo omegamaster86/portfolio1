@@ -1,10 +1,15 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
+import { getSession, useSession, signOut } from "next-auth/react"
 
 export default function Home(){
 
-  const [session, setSession] = useState(false)
+  const { data: session } = useSession()
+
+  const handleSignOut = () => {
+    signOut()
+  }
 
   return (
     <div>
@@ -12,7 +17,7 @@ export default function Home(){
         <title>Home page</title>
       </Head>
 
-      {session ? User() : Guest()}
+      {session ? User({ session, handleSignOut }) : Guest()}
     </div>
   )
 }
@@ -30,18 +35,18 @@ export const Guest = () => {
 }
 
 // Authorize User
-export const User = () => {
+export const User = ({session, handleSignOut}) => {
   return (
     <main className='container mx-auto text-center py-20'>
       <div className='text-4xl font-bold'>User Homepages</div>
 
       <div className="details">
-        <h5>Unknown</h5>
-        <h5>Unknown</h5>
+        <h5>{session.user.name}</h5>
+        <h5>{session.user.email}</h5>
       </div>
 
       <div className="flex justify-center">
-        <button className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Sign Out</button>
+        <button onClick={handleSignOut} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50'>Sign Out</button>
       </div>
 
       <div className='flex justify-center'>
@@ -49,4 +54,21 @@ export const User = () => {
       </div>
     </main>
   )
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req }) 
+
+  if(!session){
+    return{
+      redirect: {
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+
+  return{
+    props:{session}
+  }
 }
