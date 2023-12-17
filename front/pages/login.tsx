@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Layout } from "./components/layout";
 import { EmailAdress, PasswordInput } from "./components/email"
+import Image from "next/image";
 
 export default function Login(){
     return(
@@ -36,13 +37,14 @@ export default function Login(){
                     </div> */}
                 <form className=" flex flex-col gap-5">
                     <div className="input-button">
-                        <button type="submit">
+                        <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md py-3 text-gray-50 text-lg
+                        hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-blue-500 hover:text-gray-700">
                             Login
                         </button>
                     </div>
                     <div className="input-button">
-                        <button type="submit">
-                            Sign In With Google
+                        <button type="button" className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                            Sign In With Google<Image src={'/assets/google.svg'} width="20" height={20} alt="googleicon" className="pt-1"></Image>
                         </button>
                     </div>
                 </form>
