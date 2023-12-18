@@ -2,14 +2,14 @@ import Email from "next-auth/providers/email";
 import Head from "next/head";
 import Link from "next/link";
 import { Layout } from "./components/layout";
-import { EmailAdress, PasswordInput } from "./components/email"
+import { LoginInfo } from "./components/LoginInfo"
 import Image from "next/image";
 import { signIn } from "next-auth/react"
 
 export default function Login(){
 
     async function handleGoogleSignin() {
-        signIn('google', { callbackUrl : "http://localhost:8000"})
+        signIn('google',{callbackUrl : "http://localhost:8000"})
     }
 
     return(
@@ -22,8 +22,7 @@ export default function Login(){
                     <h1 className="text-gray-800 text-4xl font-bold py-4">Explore</h1>
                     <p className=" w-3/4 mx-auto text-gray-400">HHKBHHKBHHKBHHKBHHKBHHKB</p>
                 </div>
-                <EmailAdress/>
-                <PasswordInput/>
+                <LoginInfo/>
                 {/* <form className=" flex flex-col gap-5">
                     <div className="flex border rounded-xl relative">
                         <input 
@@ -48,7 +47,7 @@ export default function Login(){
                             Login
                         </button>
                     </div>
-                    <div className="input-button">
+                    <div>
                         <button type="button" onClick={handleGoogleSignin} className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
                             Sign In With Google<Image src={'/assets/google.svg'} width="20" height={20} alt="googleicon" className="pt-1"></Image>
                         </button>
