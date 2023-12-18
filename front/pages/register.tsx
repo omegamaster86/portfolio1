@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { Layout } from "./components/layout";
 import Link from "next/link";
-import { EmailAdress, PasswordInput, UserName, ConfirmPassword } from "./components/email"
+import { EmailPassword } from "./components/emailpassword"
 
 
 export default function Register(){
@@ -19,10 +19,7 @@ export default function Register(){
                     <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
                     <p className=" w-3/4 mx-auto text-gray-400">HHKBHHKBHHKBHHKBHHKBHHKB</p>
                 </div>
-                <UserName/>
-                <EmailAdress/>
-                <PasswordInput/>
-                <ConfirmPassword/>
+                <EmailPassword/>
                 <form className=" flex flex-col gap-5">
                     {/* <div className="flex border rounded-xl relative">
                         <input 
