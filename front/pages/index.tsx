@@ -55,7 +55,7 @@ export const User = ({session, handleSignOut}) => {
     </main>
   )
 }
-
+// この下をコメントアウトするとグーグルログインが可能
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req }) 
 
