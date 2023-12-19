@@ -6,9 +6,6 @@ import { EmailPassword } from "./components/emailpassword"
 
 export default function Register(){
 
-    // const [show, setShow] = useState(false)
-    // const handleClick = () => setShow(!show)
-
     return (
         <Layout>
         <Head>
