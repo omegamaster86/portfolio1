@@ -56,19 +56,19 @@ export const User = ({session, handleSignOut}) => {
   )
 }
 // この下をコメントアウトするとグーグルログインが可能
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req }) 
+// export async function getServerSideProps({ req }) {
+//   const session = await getSession({ req }) 
 
-  if(!session){
-    return{
-      redirect: {
-        destination:'/login',
-        permanent:false
-      }
-    }
-  }
+//   if(!session){
+//     return{
+//       redirect: {
+//         destination:'/login',
+//         permanent:false
+//       }
+//     }
+//   }
 
-  return{
-    props:{session}
-  }
-}
+//   return{
+//     props:{session}
+//   }
+// }
