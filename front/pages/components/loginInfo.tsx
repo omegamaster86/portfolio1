@@ -20,13 +20,12 @@ export const LoginInfo = () => {
         initialValues={{
         email: "",
         password: "",
-        rememberMe: false
         }}
         onSubmit={(values) => {
-        alert(JSON.stringify(values, null, 2));
+        console.log(values);
         }}
     >
-    {({ handleSubmit, errors, touched }) => (
+    {({ handleSubmit, errors, touched, getFieldProps }) => (
       <form onSubmit={handleSubmit}>
         <VStack spacing={4} align="flex-start">
           <FormControl>
@@ -37,6 +36,7 @@ export const LoginInfo = () => {
               name="email"
               type="email"
               placeholder='Email' 
+              {...getFieldProps('password')}
             />
             </FormControl>
             <FormControl isInvalid={!!errors.password && touched.password}>
@@ -50,6 +50,7 @@ export const LoginInfo = () => {
                           pr="4.5rem"
                           type={show ? 'text' : 'password'}
                           placeholder="Enter password"
+                          {...getFieldProps('password')}
                       />
                       <InputRightElement width="4.5rem">
                           <Button h="1.75rem" size="sm" onClick={handleClick}>
