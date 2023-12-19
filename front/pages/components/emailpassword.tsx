@@ -20,13 +20,14 @@ import {
         initialValues={{
         email: "",
         password: "",
-        rememberMe: false
+        username:"",
+        ConfirmPassword:"",
         }}
         onSubmit={(values) => {
-        alert(JSON.stringify(values, null, 2));
+            console.log(values);
         }}
     >
-    {({ handleSubmit, errors, touched }) => (
+    {({ handleSubmit, errors, touched, getFieldProps }) => (
       <form onSubmit={handleSubmit}>
         <VStack spacing={4} align="flex-start">
           <FormControl>
@@ -37,6 +38,7 @@ import {
               name="username"
               type="text"
               placeholder='UserName' 
+              {...getFieldProps('username')}
             />
           </FormControl>
           <FormControl>
@@ -46,7 +48,8 @@ import {
               id="email"
               name="email"
               type="email"
-              placeholder='Email' 
+              placeholder='Email'
+              {...getFieldProps('email')}
             />
           </FormControl>
           <FormControl isInvalid={!!errors.password && touched.password}>
@@ -60,6 +63,7 @@ import {
                         pr="4.5rem"
                         type={show ? 'text' : 'password'}
                         placeholder="Enter password"
+                        {...getFieldProps('password')}
                     />
                     <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -82,6 +86,7 @@ import {
                         pr="4.5rem"
                         type={show ? 'text' : 'password'}
                         placeholder="ConfirmPassword"
+                        {...getFieldProps('ConfirmPassword')}
                     />
                     <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -93,6 +98,9 @@ import {
             </Field>
             <FormErrorMessage>{errors.password}</FormErrorMessage>
           </FormControl>
+          <Button mt={4} type="submit">
+              Submit
+          </Button>
         </VStack>
       </form>
     )}
