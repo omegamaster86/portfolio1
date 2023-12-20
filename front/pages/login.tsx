@@ -23,23 +23,6 @@ export default function Login(){
                     <p className=" w-3/4 mx-auto text-gray-400">HHKBHHKBHHKBHHKBHHKBHHKB</p>
                 </div>
                 <LoginInfo/>
-                {/* <form className=" flex flex-col gap-5">
-                    <div className="flex border rounded-xl relative">
-                        <input 
-                        className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none"
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        />
-                    </div>
-                    <div className="flex border rounded-xl relative">
-                        <input 
-                        className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none"
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                        />
-                    </div> */}
                 <form className=" flex flex-col gap-5">
                     <div className="input-button">
                         <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md py-3 text-gray-50 text-lg
