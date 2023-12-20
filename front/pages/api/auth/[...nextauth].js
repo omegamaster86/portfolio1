@@ -2,6 +2,8 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import axios from 'axios'
 
+
+
 export default NextAuth ({
   // Configure one or more authentication providers
   providers: [
@@ -12,13 +14,16 @@ export default NextAuth ({
   ],
   callbacks: {
     async signIn({ user, account }) {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
       const provider = account.provider
+      const uid = account.sub
       const name = user.name
       const email = user.email
 
       try {
         const response = await axios.post(`${apiUrl}/auth/${provider}/callback`, {
           provider,
+          uid,
           name,
           email,
         })
