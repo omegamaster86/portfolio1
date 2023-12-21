@@ -14,27 +14,26 @@ class UsersController < ApplicationController
   end
 
   # POST /users
-  # def create
-  #   @user = User.new(user_params)
+  def create
+    @user = User.new(user_params)
 
-  #   if @user.save
-  #     render json: @user, status: :created, location: @user
+    if @user.save
+      render json: @user, status: :created, location: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # def create
+  #   user = User.new(user_params)
+  #   if user.save
+  #     # ユーザーの登録に成功したときの処理
+  #     render json: { status: 'created', user: user }
   #   else
-  #     render json: @user.errors, status: :unprocessable_entity
+  #     # ユーザーの登録に失敗したときの処理
+  #     render json: { status: 'error', errors: user.errors.full_messages }
   #   end
   # end
-
-  def create
-    # 引数の条件に該当するデータがあればそれを返す。なければ新規作成する
-    user = User.find_or_create_by(provider: params[:provider], uid: params[:uid], name: params[:name], email: params[:email])                      
-    if user
-      head :ok
-    else
-      render json: { error: "ログインに失敗しました" }, status: :unprocessable_entity
-    end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :internal_server_error
-  end
 
   def destroy
     user = User.find_by(email: params[:email])
@@ -62,6 +61,7 @@ class UsersController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -72,5 +72,9 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password_digest)
     end
 
+    # def user_params
+    #   # 適切なパラメータのストロングパラメーター
+    #   params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    # end
     
 end
