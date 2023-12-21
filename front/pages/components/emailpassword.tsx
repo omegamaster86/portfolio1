@@ -10,10 +10,23 @@ import {
   } from "@chakra-ui/react";
   import { Formik, Field } from "formik";
   import { useState } from "react";
+  import axios from 'axios';
 
   export const EmailPassword = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
+
+    const handleSubmit = async (values, { setSubmitting }) => {
+      try {
+        const response = await axios.post('http://localhost:3000/users', { user: values });
+        console.log(response.data);
+        // 登録に成功した場合の処理
+      } catch (error) {
+        console.error(error);
+        // サーバーエラーが発生した場合や登録に失敗した場合の処理
+      }
+      setSubmitting(false);
+    };
 
     return (
     <Formik
@@ -23,9 +36,10 @@ import {
         username:"",
         ConfirmPassword:"",
         }}
-        onSubmit={(values) => {
-            console.log(values);
-        }}
+        // onSubmit={(values) => {
+        //     console.log(values);
+        // }}
+        onSubmit={handleSubmit}
     >
     {({ handleSubmit, errors, touched, getFieldProps }) => (
       <form onSubmit={handleSubmit}>
@@ -52,7 +66,7 @@ import {
               {...getFieldProps('email')}
             />
           </FormControl>
-          <FormControl isInvalid={!!errors.password && touched.password}>
+          <FormControl>
           <FormLabel htmlFor="password"></FormLabel>
             <Field name="password">
                 {({ field }) => (
@@ -73,9 +87,8 @@ import {
                     </InputGroup>
                 )}
             </Field>
-            <FormErrorMessage>{errors.password}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={!!errors.password && touched.password}>
+          <FormControl >
           <FormLabel htmlFor="password"></FormLabel>
             <Field name="ConfirmPassword">
                 {({ field }) => (
@@ -96,11 +109,10 @@ import {
                     </InputGroup>
                 )}
             </Field>
-            <FormErrorMessage>{errors.password}</FormErrorMessage>
           </FormControl>
-          <Button mt={4} type="submit">
+          {/* <Button mt={4} type="submit">
               Submit
-          </Button>
+          </Button> */}
         </VStack>
       </form>
     )}
