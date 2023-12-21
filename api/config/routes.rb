@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :registers
   resources :users
   post 'auth/:provider/callback', to: 'api/v1/users#create'
  delete 'users/:email', to: 'api/v1/users#destroy', constraints: { email: %r{[^/]+} }
