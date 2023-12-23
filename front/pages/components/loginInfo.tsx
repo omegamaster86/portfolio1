@@ -30,16 +30,15 @@ export const LoginInfo = () => {
         <VStack spacing={4} align="flex-start">
           <FormControl>
             <FormLabel htmlFor="email"></FormLabel>
-            <Field
-              as={Input}
+            <Input
               id="email"
               name="email"
               type="email"
               placeholder='Email' 
-              {...getFieldProps('password')}
+              {...getFieldProps('email')}
             />
-            </FormControl>
-            <FormControl isInvalid={!!errors.password && touched.password}>
+          </FormControl>
+          <FormControl isInvalid={!!errors.password && touched.password}>
             <FormLabel htmlFor="password"></FormLabel>
               <Field name="password">
                   {({ field }) => (
@@ -63,7 +62,7 @@ export const LoginInfo = () => {
             <FormErrorMessage>{errors.password}</FormErrorMessage>
           </FormControl>
         </VStack>
-        </form>
+      </form>
       )}
     </Formik>
   )
