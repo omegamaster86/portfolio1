@@ -29,7 +29,7 @@ const Todos = () => {
   }, []);
 
   return (
-    <div className="space-y-6 w-3/4 max-w-lg pt-10">
+    <div className="space-y-6 w-3/4 max-w-lg pt-10 m-auto">
       <label className="block text-xl font-bold text-gray-700">Todo Index</label>
       <div className="items-center justify-center">
         {todos.map((todo) => (
