@@ -1,121 +1,151 @@
+import React, { useState } from 'react';
 import {
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-    VStack,
-    Button,
-    InputGroup,
-    InputRightElement,
-  } from "@chakra-ui/react";
-  import { Formik, Field } from "formik";
-  import { useState } from "react";
-  import axios from 'axios';
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  VStack,
+  Button,
+  InputGroup,
+  InputRightElement,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { FormErrors, FormValues } from '../../types/interface';
 
-  export const EmailPassword = () => {
-    const [show, setShow] = useState(false)
-    const handleClick = () => setShow(!show)
+export const EmailPassword = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [show, setShow] = useState(false);
+  const router = useRouter();
 
-    const handleSubmit = async (values, { setSubmitting }) => {
+  // const validate = (values: FormValues):FormErrors => {
+  //   const errors = {};
+  //   if (!values.username) errors.username = 'Required';
+  //   if (!values.email) {
+  //     errors.email = 'Required';
+  //   } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+  //     errors.email = 'Invalid email address';
+  //   }
+  //   if (!values.password) {
+  //     errors.password = 'Required';
+  //   } else if (values.password.length < 3) {
+  //     errors.password = 'Password must be at least 8 characters';
+  //   }
+  //   if (!values.confirmpassword) {
+  //     errors.confirmpassword = 'Required';
+  //   } else if (values.password !== values.confirmpassword) {
+  //     errors.confirmpassword = 'Passwords do not match';
+  //   }
+  //   return errors;
+  // };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e:React.FormEvent) => {
+    e.preventDefault();
+    // const newErrors = validate(formData);
+    // if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post('http://localhost:3000/users', { user: values });
-        console.log(response.data);
-        // 登録に成功した場合の処理
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/registers`, {
+          user: formData,
+        });
+        router.push('/login');
       } catch (error) {
-        console.error(error);
-        // サーバーエラーが発生した場合や登録に失敗した場合の処理
+        setErrors({ server: error.response.data.message });
       }
-      setSubmitting(false);
-    };
+    // } else {
+    //   setErrors(newErrors);
+    // }
+  };
 
-    return (
-    <Formik
-        initialValues={{
-        email: "",
-        password: "",
-        username:"",
-        ConfirmPassword:"",
-        }}
-        // onSubmit={(values) => {
-        //     console.log(values);
-        // }}
-        onSubmit={handleSubmit}
-    >
-    {({ handleSubmit, errors, touched, getFieldProps }) => (
-      <form onSubmit={handleSubmit}>
-        <VStack spacing={4} align="flex-start">
-          <FormControl>
-            <FormLabel htmlFor="text"></FormLabel>
-            <Field
-              as={Input}
-              id="username"
-              name="username"
-              type="text"
-              placeholder='UserName' 
-              {...getFieldProps('username')}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="email"></FormLabel>
-            <Field
-              as={Input}
-              id="email"
-              name="email"
-              type="email"
-              placeholder='Email'
-              {...getFieldProps('email')}
-            />
-          </FormControl>
-          <FormControl>
+  return (
+    <form onSubmit={handleSubmit}>
+      <VStack spacing={4} align="flex-start">
+        {/* Username Field */}
+        <FormControl isInvalid={errors.username}>
+          <FormLabel htmlFor="username"></FormLabel>
+          <Input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Username"
+            onChange={handleChange}
+            value={formData.username}
+          />
+          <FormErrorMessage>{errors.username}</FormErrorMessage>
+        </FormControl>
+        {/* Email Field */}
+        <FormControl isInvalid={errors.email}>
+          <FormLabel htmlFor="email"></FormLabel>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={handleChange}
+            value={formData.email}
+          />
+          <FormErrorMessage>{errors.email}</FormErrorMessage>
+        </FormControl>
+        {/* Password Field */}
+        <FormControl isInvalid={errors.password}>
           <FormLabel htmlFor="password"></FormLabel>
-            <Field name="password">
-                {({ field }) => (
-                    <InputGroup size="md">
-                    <Input
-                        {...field}
-                        id="password"
-                        pr="4.5rem"
-                        type={show ? 'text' : 'password'}
-                        placeholder="Enter password"
-                        {...getFieldProps('password')}
-                    />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? 'Hide' : 'Show'}
-                        </Button>
-                    </InputRightElement>
-                    </InputGroup>
-                )}
-            </Field>
-          </FormControl>
-          <FormControl >
-          <FormLabel htmlFor="password"></FormLabel>
-            <Field name="ConfirmPassword">
-                {({ field }) => (
-                    <InputGroup size="md">
-                    <Input
-                        {...field}
-                        id="ConfirmPassword"
-                        pr="4.5rem"
-                        type={show ? 'text' : 'password'}
-                        placeholder="ConfirmPassword"
-                        {...getFieldProps('ConfirmPassword')}
-                    />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? 'Hide' : 'Show'}
-                        </Button>
-                    </InputRightElement>
-                    </InputGroup>
-                )}
-            </Field>
-          </FormControl>
-          {/* <Button mt={4} type="submit">
-              Submit
-          </Button> */}
-        </VStack>
-      </form>
-    )}
-  </Formik>
-    )
-}
+          <InputGroup size="md">
+            <Input
+              id="password"
+              name="password"
+              type={show ? 'text' : 'password'}
+              placeholder="Password"
+              onChange={handleChange}
+              value={formData.password}
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                {show ? 'Hide' : 'Show'}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <FormErrorMessage>{errors.password}</FormErrorMessage>
+        </FormControl>
+        {/* Confirm Password Field */}
+        <FormControl isInvalid={errors.password_confirmation}>
+          <FormLabel htmlFor="password_confirmation"></FormLabel>
+          <InputGroup size="md">
+            <Input
+              id="password_confirmation"
+              name="password_confirmation"
+              type={show ? 'text' : 'password'}
+              placeholder="Confirm Password"
+              onChange={handleChange}
+              value={formData.password_confirmation}
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                {show ? 'Hide' : 'Show'}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <FormErrorMessage>{errors.password_confirmation}</FormErrorMessage>
+        </FormControl>
+        {/* Server-side Error Message */}
+        {errors.server && <p style={{ color: 'red' }}>{errors.server}</p>}
+          <div className=" flex flex-col gap-5 w-72">
+            <div className="input-button">
+                <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md py-3 text-gray-50 text-lg
+                  hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-blue-500 hover:text-gray-700">
+                    Register
+                </button>
+            </div>
+          </div>
+      </VStack>
+    </form>
+  );
+};
