@@ -1,22 +1,23 @@
 class RegistersController < ApplicationController
 
   def index
-    @registers = Register.all
-    render json: @registers
+    @register = Register.all
+    render json: @register
   end
 
   def create
-    @registers = Register.new(registers_params)
-    if @registers.save
-      render json: @registers, status: :created, location: @registers
+    @register = Register.new(registers_params)
+    if @register.save
+      render json: @register, status: :created, location: @register
     else
-      render json: @registers.errors, status: :unprocessable_entity
+      render json: { errors: @register.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
 
   def registers_params
-    params.require(:user).permit(:username, :email, :password, :confirmpassword)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
+  
 end
