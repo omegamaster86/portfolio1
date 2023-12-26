@@ -15,10 +15,9 @@ import { FormErrors, FormValues } from '../../types/interface';
 
 export const EmailPassword = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
-    password_confirmation: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [show, setShow] = useState(false);
@@ -54,7 +53,7 @@ export const EmailPassword = () => {
     // const newErrors = validate(formData);
     // if (Object.keys(newErrors).length === 0) {
       try {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/registers`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
           user: formData,
         });
         router.push('/login');
@@ -70,17 +69,17 @@ export const EmailPassword = () => {
     <form onSubmit={handleSubmit}>
       <VStack spacing={4} align="flex-start">
         {/* Username Field */}
-        <FormControl isInvalid={errors.username}>
-          <FormLabel htmlFor="username"></FormLabel>
+        <FormControl isInvalid={errors.name}>
+          <FormLabel htmlFor="name"></FormLabel>
           <Input
-            id="username"
+            id="name"
             name="username"
             type="text"
-            placeholder="Username"
+            placeholder="name"
             onChange={handleChange}
-            value={formData.username}
+            value={formData.name}
           />
-          <FormErrorMessage>{errors.username}</FormErrorMessage>
+          <FormErrorMessage>{errors.name}</FormErrorMessage>
         </FormControl>
         {/* Email Field */}
         <FormControl isInvalid={errors.email}>
