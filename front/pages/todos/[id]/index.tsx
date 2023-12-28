@@ -60,7 +60,7 @@ const TodoDetail = () => {
         {/* 削除ボタンコンポーネントを追加 */}
         <DeleteTodoButton id={todo.id} />
       </div>
-    </div>
+</div>
   );
 };
 
