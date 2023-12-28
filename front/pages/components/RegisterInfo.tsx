@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSession } from "next-auth/react"
 
   const schema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -30,7 +29,6 @@ import { useSession } from "next-auth/react"
     const [formErrors, setFormErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const { data: session } = useSession()
     const {
       register,
       handleSubmit,
