@@ -1,16 +1,23 @@
 class AuthenticationController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
   
     def login
-      user = User.find_by(email: params[:email])
+      user = User.find_by(email: params[:email],password: params[:password])
+      logger.debug "Loaded user: #{user.inspect}"
   
-      if user && user.authenticate(params[:password])
+      if user
         # 認証に成功した場合の処理（例：トークンの発行）
-        token = generate_token(user)
+        token = SecureRandom.hex(64)
+        logger.debug "Loaded token: #{token.inspect}"
         render json: { token: token }, status: :ok
       else
         # 認証に失敗した場合の処理
         render json: { error: 'Invalid credentials' }, status: :unauthorized
+      end
+
+      def show
+        @user = User.find(params[:id])
+        logger.debug "Loaded user: #{@user.inspect}"
       end
     end
   
