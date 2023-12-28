@@ -23,6 +23,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    user = User.find_by(email: params[:email])
+    if user
+      render json: user
+    else
+      render json: { error: "ユーザーが見つかりませんでした" }, status: :not_found
+    end
+  rescue StandardError => e
+    render json: { error: e.message }, status: :internal_server_error
+  end
+
 #   def destroy
 #     user = User.find_by(email: params[:email])
 #     if user
