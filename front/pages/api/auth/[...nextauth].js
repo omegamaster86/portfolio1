@@ -11,4 +11,29 @@ export default NextAuth ({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  // callbacks: {
+  //   async signIn({ user, account }) {
+  //     const provider = account.provider
+  //     const uid = account.sub
+  //     const name = user.name
+  //     const email = user.email
+
+  //     try {
+  //       const response = await axios.post(`${apiUrl}/auth/${provider}/callback`, {
+  //         provider,
+  //         uid,
+  //         name,
+  //         email,
+  //       })
+  //       if (response.status === 200) {
+  //         return true
+  //       } else {
+  //         return false
+  //       }
+  //     } catch (error) {
+  //       console.log('エラー', error)
+  //       return false
+  //     }
+  //   },
+  // },
 })
