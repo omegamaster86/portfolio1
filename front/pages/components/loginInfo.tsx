@@ -35,15 +35,16 @@ export const LoginInfo = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data); 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         email: data.email,
         password: data.password,
       });
       console.log(response.data); 
       // 認証成功のレスポンスを確認
-      if (response.data.isAuthenticated) {
+      if (response.data.token) {
         // 認証が成功した場合はダッシュボードにリダイレクト
-        router.push('/dashboard');
+        router.push('/dashbord');
       } else {
         // 認証に失敗した場合の処理
         setFormErrors({ server: "認証に失敗しました。" });
