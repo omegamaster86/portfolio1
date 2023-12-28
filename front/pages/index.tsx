@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
-import { getSession, useSession, signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 export default function Home(){
 
