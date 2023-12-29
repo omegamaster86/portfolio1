@@ -47,26 +47,14 @@ class UsersController < ApplicationController
 
   # Rails APIを叩いてユーザー情報をDBに保存する用のメソッド
   def create
-    # 引数の条件に該当するデータがあればそれを返す。なければ新規作成する
-    user = User.find_or_create_by(provider: params[:provider], uid: params[:uid], name: params[:name], email: params[:email])                      
-    if user
-      head :ok
-    else
-      render json: { error: "ログインに失敗しました" }, status: :unprocessable_entity
-    end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :internal_server_error
-  end
+    user = User.find_or_initialize_by(google_id: user_params[:google_id])
+    user.update(user_params)
 
-  def destroy
-    user = User.find_by(email: params[:email])
-    if user
-      user.destroy
+    if user.save
+      render json: { id: user.id }, status: :created
     else
-      render json: { error: "ユーザーが見つかりませんでした" }, status: :not_found
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :internal_server_error
   end
 
   private
@@ -78,7 +66,7 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :google_id)
     end
 
     # def user_params
