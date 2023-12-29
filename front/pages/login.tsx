@@ -1,14 +1,35 @@
-import Email from "next-auth/providers/email";
 import Head from "next/head";
 import Link from "next/link";
 import { Layout } from "./components/layout";
 import { LoginInfo } from "./components/LoginInfo"
 import Image from "next/image";
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Login(){
 
-    async function handleGoogleSignin() {
+    // async function handleGoogleSignin() {
+    //     signIn('google',{callbackUrl : "http://localhost:8000"})
+    // }
+
+    async function handleGoogleLogin () {
+        const result = await signIn('google');
+        if (result?.ok) {
+            // Google認証成功後、ユーザー情報をバックエンドに送信
+            const { data: session } = useSession();
+            if (session) {
+                await fetch('/api/register_user', { // バックエンドのエンドポイント
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        email: session.user.email, 
+                        name: session.user.name, 
+                        google_id: session.user.id 
+                    }),
+                });
+            }
+        }
         signIn('google',{callbackUrl : "http://localhost:8000"})
     }
 
@@ -24,14 +45,8 @@ export default function Login(){
                 </div>
                 <LoginInfo/>
                 <form className=" flex flex-col gap-5">
-                    {/* <div className="input-button">
-                        <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md py-3 text-gray-50 text-lg
-                        hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-blue-500 hover:text-gray-700">
-                            Login
-                        </button>
-                    </div> */}
                     <div>
-                        <button type="button" onClick={handleGoogleSignin} className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                        <button type="button" onClick={handleGoogleLogin} className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
                             Sign In With Google<Image src={'/assets/google.svg'} width="20" height={20} alt="googleicon" className="pt-1"></Image>
                         </button>
                     </div>
