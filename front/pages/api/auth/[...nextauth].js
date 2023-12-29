@@ -11,6 +11,13 @@ export default NextAuth ({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      // ここでGoogleの一意のIDをセッションに追加
+      session.user.id = token.sub; // 'sub' はGoogleの一意のIDを表す
+      return session;
+    }
+  }
   // callbacks: {
   //   async signIn({ user, account }) {
   //     const provider = account.provider
