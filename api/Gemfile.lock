@@ -56,6 +56,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    bcrypt (3.1.20)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -87,7 +88,7 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     mysql2 (0.5.5)
-    net-imap (0.4.7)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -104,6 +105,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (2.2.8)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (6.0.6.1)
@@ -163,11 +166,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.20)
   bootsnap (>= 1.4.2)
   byebug
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
   puma (~> 4.1)
+  rack-cors (~> 2.0)
   rails (~> 6.0.6, >= 6.0.6.1)
   spring
   spring-watcher-listen (~> 2.0.0)

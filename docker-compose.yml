@@ -2,9 +2,11 @@ version: '3.7'
 
 services: 
   db:
-    image: mysql:8.2
-    platform: linux/x86_64
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    image: mysql:8.0
+    # platform: linux/arm64/v8
+    # command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: portfolio_db
     environment:
     # 環境変数で置き換える（password）
       MYSQL_ROOT_PASSWORD: password
@@ -26,13 +28,18 @@ services:
     volumes:
       - ./api:/app
     command: rails server -b 0.0.0.0
+    image: portfolio_api_image
+    container_name: portfolio_api
   front: 
     build:
-      context: ./front/
+      context: ./front
       dockerfile: Dockerfile
     volumes:
       - ./front:/front
+      # - /front/node_modules
     command: 'yarn dev'
+    image: portfolio_front_image
+    container_name: portfolio_front
     ports:
       - "8000:3000"
 volumes:
